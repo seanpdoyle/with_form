@@ -1,0 +1,9 @@
+<%= form_with(scope: :widget) do |form| %>
+  <%= form.label(:text_field) %>
+  <%= form.text_field(:text_field) %>
+
+  <hr>
+
+  <%= form.label(:text_area_field) %>
+  <%= form.text_area(:text_area_field) %>
+<% end %>
