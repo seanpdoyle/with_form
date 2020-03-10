@@ -15,6 +15,14 @@ module WithForm
       )
     end
 
+    def attach_file(attribute, path = nil, **options)
+      scope_form.attach_file(
+        attribute,
+        path || @model.public_send(attribute),
+        **options,
+      )
+    end
+
     def select(attribute, from: nil, **options)
       case attribute
       when Symbol
