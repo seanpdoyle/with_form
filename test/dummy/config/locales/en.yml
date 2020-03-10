@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  helpers:
+    label:
+      widget:
+        text_field: "Widget Text Field"
+        text_area_field: "Widget Text Area Field"

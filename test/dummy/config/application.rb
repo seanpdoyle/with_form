@@ -1,6 +1,11 @@
 require_relative 'boot'
 
-require 'rails/all'
+require 'active_record/railtie'
+require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'action_text/engine'
+require 'rails/test_unit/railtie'
 
 Bundler.require(*Rails.groups)
 require "with_form"
@@ -16,4 +21,3 @@ module Dummy
     # the framework and any gems in your application.
   end
 end
-
