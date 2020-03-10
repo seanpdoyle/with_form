@@ -15,6 +15,28 @@ module WithForm
       )
     end
 
+    def select(attribute, from: nil, **options)
+      case attribute
+      when Symbol
+        value = @model.public_send(attribute)
+      else
+        value = attribute
+      end
+
+      scope_form.select value, from: from || attribute, **options
+    end
+
+    def unselect(attribute, from: nil, **options)
+      case attribute
+      when Symbol
+        value = @model.public_send(attribute)
+      else
+        value = attribute
+      end
+
+      scope_form.unselect value, from: from || attribute, **options
+    end
+
     private
 
     def scope_form
