@@ -48,6 +48,8 @@ en:
     submit:
       widget_record:
         create: "Create"
+        submit: "Submit"
         update: "Update"
       widget:
+        create: "Create"
         submit: "Submit"
