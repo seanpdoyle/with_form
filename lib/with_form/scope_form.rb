@@ -1,5 +1,5 @@
 module WithForm
-  class Form
+  class ScopeForm
     include ActionView::Helpers::TranslationHelper
 
     delegate :check, :uncheck, :choose, to: :@page
