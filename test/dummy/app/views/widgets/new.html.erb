@@ -6,4 +6,22 @@
 
   <%= form.label(:text_area_field) %>
   <%= form.text_area(:text_area_field) %>
+
+  <hr>
+
+  <%= form.label(:select_field) %>
+  <%= form.select(:select_field, [
+    "Bad",
+    "Good",
+    "Great",
+  ]) %>
+
+  <hr>
+
+  <%= form.label(:multiple_select_field) %>
+  <%= form.select(:multiple_select_field, [
+    "Bad",
+    "Good",
+    "Great",
+  ], {}, multiple: true) %>
 <% end %>

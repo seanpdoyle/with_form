@@ -34,5 +34,8 @@ en:
   helpers:
     label:
       widget:
+        checkbox_field: "Checkbox Field"
+        multiple_select_field: "Multiple Select Field"
+        select_field: "Select Field"
         text_field: "Widget Text Field"
         text_area_field: "Widget Text Area Field"
