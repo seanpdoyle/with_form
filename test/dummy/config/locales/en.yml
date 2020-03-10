@@ -35,6 +35,7 @@ en:
     label:
       widget:
         checkbox_field: "Checkbox Field"
+        file_field: "File Field"
         multiple_select_field: "Multiple Select Field"
         select_field: "Select Field"
         text_field: "Widget Text Field"
