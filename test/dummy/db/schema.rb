@@ -10,6 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_03_10_042146) do
+
+  create_table "widget_records", force: :cascade do |t|
+    t.text "text_field"
+  end
 
 end

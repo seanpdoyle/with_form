@@ -25,6 +25,14 @@ module WithForm
       @page.attach_file label(attribute), path, **options
     end
 
+    def click_button(action = nil, **options)
+      @page.click_button submit(action), **options
+    end
+
+    def submit(action = nil)
+      translate(action || :submit, scope: [:helpers, :submit, @scope])
+    end
+
     def label(attribute)
       translate(attribute, scope: [:helpers, :label, @scope])
     end
