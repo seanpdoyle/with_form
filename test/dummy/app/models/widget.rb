@@ -6,6 +6,7 @@ class Widget
   attribute :file_field
   attribute :select_field, :string
   attribute :multiple_select_field, :string
+  attribute :radio_field, :string
   attribute :text_field, :string
   attribute :text_area_field, :string
 end

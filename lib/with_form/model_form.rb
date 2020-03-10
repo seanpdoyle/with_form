@@ -23,6 +23,17 @@ module WithForm
       )
     end
 
+    def choose(attribute, **options)
+      case attribute
+      when Symbol
+        value = @model.public_send(attribute)
+      else
+        value = attribute
+      end
+
+      scope_form.choose value, **options
+    end
+
     def check(attribute, **options)
       case attribute
       when Symbol
