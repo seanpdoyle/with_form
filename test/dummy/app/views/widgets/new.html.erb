@@ -40,4 +40,17 @@
     <%= builder.label %>
     <%= builder.check_box(checked: builder.value == "Java") %>
   <% end %>
+
+  <hr>
+
+  <%= form.label(:radio_field) %>
+  <%= form.collection_radio_buttons(
+    :radio_field,
+    [
+      "Up",
+      "Down",
+    ],
+    :to_s,
+    :to_s,
+  ) %>
 <% end %>
