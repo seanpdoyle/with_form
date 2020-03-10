@@ -21,6 +21,10 @@ module WithForm
       @page.unselect value, from: label(from), **options
     end
 
+    def attach_file(attribute, path, **options)
+      @page.attach_file label(attribute), path, **options
+    end
+
     def label(attribute)
       translate(attribute, scope: [:helpers, :label, @scope])
     end
