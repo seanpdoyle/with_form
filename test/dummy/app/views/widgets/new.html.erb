@@ -24,4 +24,20 @@
     "Good",
     "Great",
   ], {}, multiple: true) %>
+
+  <hr>
+
+  <%= form.label(:checkbox_field) %>
+  <%= form.collection_check_boxes(
+    :checkbox_field,
+    [
+      "Ruby",
+      "Java",
+    ],
+    :to_s,
+    :to_s,
+  ) do |builder| %>
+    <%= builder.label %>
+    <%= builder.check_box(checked: builder.value == "Java") %>
+  <% end %>
 <% end %>

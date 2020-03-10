@@ -2,6 +2,8 @@ module WithForm
   class Form
     include ActionView::Helpers::TranslationHelper
 
+    delegate :check, :uncheck, to: :@page
+
     def initialize(scope:, page:)
       @page = page
       @scope = scope
