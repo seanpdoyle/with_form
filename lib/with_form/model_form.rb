@@ -23,6 +23,28 @@ module WithForm
       )
     end
 
+    def check(attribute, **options)
+      case attribute
+      when Symbol
+        values = Array(@model.public_send(attribute))
+      else
+        values = Array(attribute)
+      end
+
+      values.each { |value| scope_form.check(value, **options) }
+    end
+
+    def uncheck(attribute, **options)
+      case attribute
+      when Symbol
+        values = Array(@model.public_send(attribute))
+      else
+        values = Array(attribute)
+      end
+
+      values.each { |value| scope_form.uncheck(value, **options) }
+    end
+
     def select(attribute, from: nil, **options)
       case attribute
       when Symbol

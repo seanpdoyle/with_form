@@ -2,7 +2,7 @@ class Widget
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-
+  attribute :checkbox_field
   attribute :file_field
   attribute :select_field, :string
   attribute :multiple_select_field, :string
