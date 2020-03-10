@@ -9,19 +9,10 @@ Gem::Specification.new do |spec|
   spec.version     = WithForm::VERSION
   spec.authors     = ["Sean Doyle"]
   spec.email       = ["sean.p.doyle24@gmail.com"]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of WithForm."
-  spec.description = "TODO: Description of WithForm."
+  spec.homepage    = "https://github.com/seanpdoyle/with_form"
+  spec.summary     = "Your System Test's counterpart to `form_with`"
+  spec.description = "Leverage Rails-generated <label> values to submit <form> elements in System Tests"
   spec.license     = "MIT"
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
