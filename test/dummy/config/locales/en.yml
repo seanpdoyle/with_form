@@ -37,6 +37,8 @@ en:
         text_field: "Record Text Field"
       widget:
         checkbox_field: "Checkbox Field"
+        single_checkbox_field: "Single Checkbox Field"
+        checked_single_checkbox_field: "Checked Single Checkbox Field"
         file_field: "File Field"
         multiple_select_field: "Multiple Select Field"
         select_field: "Select Field"

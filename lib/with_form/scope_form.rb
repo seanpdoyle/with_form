@@ -2,11 +2,33 @@ module WithForm
   class ScopeForm
     include ActionView::Helpers::TranslationHelper
 
-    delegate :check, :uncheck, :choose, to: :@page
+    delegate :choose, to: :@page
 
     def initialize(scope:, page:)
       @page = page
       @scope = scope
+    end
+
+    def check(attribute, **options)
+      case attribute
+      when Symbol
+        value = label(attribute)
+      else
+        value = attribute
+      end
+
+      @page.check value, **options
+    end
+
+    def uncheck(attribute, **options)
+      case attribute
+      when Symbol
+        value = label(attribute)
+      else
+        value = attribute
+      end
+
+      @page.uncheck value, **options
     end
 
     def fill_in(attribute, with:, **options)
