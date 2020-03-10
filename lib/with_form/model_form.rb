@@ -78,6 +78,17 @@ module WithForm
       scope_form.unselect value, from: from || attribute, **options
     end
 
+    def click_button(action = nil, **options)
+      if action.present?
+      elsif @model.persisted?
+        action = :update
+      else
+        action = :create
+      end
+
+      scope_form.click_button action, **options
+    end
+
     private
 
     def scope_form
