@@ -1,4 +1,6 @@
-<%= form_with(scope: :widget) do |form| %>
+<%= flash.notice %>
+
+<%= form_with(scope: :widget, method: :get) do |form| %>
   <%= form.label(:text_field) %>
   <%= form.text_field(:text_field) %>
 
@@ -58,4 +60,6 @@
 
   <%= form.label(:file_field) %>
   <%= form.file_field(:file_field) %>
+
+  <%= form.submit %>
 <% end %>

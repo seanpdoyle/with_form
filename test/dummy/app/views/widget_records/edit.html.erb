@@ -1,0 +1,8 @@
+<%= flash.notice %>
+
+<%= form_with(model: widget_record) do |form| %>
+  <%= form.label(:text_field) %>
+  <%= form.text_field(:text_field) %>
+
+  <%= form.submit %>
+<% end %>

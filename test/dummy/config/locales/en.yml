@@ -33,6 +33,8 @@ en:
   hello: "Hello world"
   helpers:
     label:
+      widget_record:
+        text_field: "Record Text Field"
       widget:
         checkbox_field: "Checkbox Field"
         file_field: "File Field"
@@ -40,3 +42,10 @@ en:
         select_field: "Select Field"
         text_field: "Widget Text Field"
         text_area_field: "Widget Text Area Field"
+
+    submit:
+      widget_record:
+        create: "Create"
+        update: "Update"
+      widget:
+        submit: "Submit"
