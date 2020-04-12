@@ -8,6 +8,8 @@ version links.
 
 ## master
 
+## [0.2.0] - April 12, 2020
+
 While `with_form` can simplify `<form>` element interactions with multiple
 steps, there are times when a single line of instructions is more convenient.
 
