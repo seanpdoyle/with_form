@@ -38,6 +38,17 @@ module WithForm
       @page.fill_in label(attribute), with: with, **options
     end
 
+    def fill_in_rich_text_area(locator = nil, with:)
+      fill_in_script = <<~JS
+        this.editor.loadHTML(arguments[0])
+      JS
+
+      @page.find(:rich_text_area, label(locator)).execute_script(
+        fill_in_script,
+        with.to_s,
+      )
+    end
+
     def select(value, from:, **options)
       @page.select value, from: label(from), **options
     end

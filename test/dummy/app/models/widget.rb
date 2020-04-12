@@ -11,4 +11,5 @@ class Widget
   attribute :radio_field, :string
   attribute :text_field, :string
   attribute :text_area_field, :string
+  attribute :rich_text_area_field, :string
 end

@@ -1,2 +1,0 @@
-class RichWidgetsController < ApplicationController
-end

@@ -15,6 +15,14 @@ module WithForm
       )
     end
 
+    def fill_in_rich_text_area(attribute, with: nil, **options)
+      scope_form.fill_in_rich_text_area(
+        attribute,
+        with: with || @model.public_send(attribute),
+        **options,
+      )
+    end
+
     def attach_file(attribute, path = nil, **options)
       scope_form.attach_file(
         attribute,

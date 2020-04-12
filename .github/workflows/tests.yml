@@ -52,13 +52,13 @@ jobs:
         sudo apt-get -yqq install libsqlite3-dev chromium-browser
 
         bundle install --jobs 4 --retry 3
-        bin/rails app:yarn:install
 
+        bin/rails app:webpacker:yarn_install
         bin/rails app:webdrivers:chromedriver:update
 
     - name: "Prepare for Tests"
       run: |
-        bin/rails db:create db:migrate db:test:prepare
+        bin/rails app:db:{create,migrate,test:prepare}
 
     - name: "Run Engine Tests"
       run: |

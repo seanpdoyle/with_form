@@ -199,6 +199,69 @@ Those include:
 
 [actions]: https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Actions
 
+#### ActionText `rich_text_area` support
+
+When [`ActionText`][actiontext] is available, `with_form` provides a
+`#fill_in_rich_text_area` helper method.
+
+The current implementation is inspired by
+`ActionText::SystemTestHelper#fill_in_rich_text_area` that is currently declared
+on  the current [`rails@master` branch][fill_in_rich_text_area].
+
+```ruby
+class UserInteractsWithRichTextAreasTest < ApplicationSystemTestCase
+  include WithForm::TestHelpers
+
+  test "makes a post with a scope: argument" do
+    visit new_post_path
+    with_form(scope: :post) do |form|
+      form.fill_in_rich_text_area :body, with: "My First Post"
+      form.click_button
+    end
+
+    assert_text "My First Post"
+  end
+
+  test "user makes a post with a model: argument" do
+    post = Post.new(body: "My First Post")
+
+    visit new_post_path
+    with_form(model: post) do |form|
+      form.fill_in_rich_text_area :body
+      form.click_button
+    end
+
+    assert_text "My First Post"
+  end
+end
+```
+
+There is a current limitation in how the [`rails@master`-inspired
+`#fill_in_rich_text_area` implementation][fill_in_rich_text_area] resolves the
+`locator` argument. Since the underlying `<trix-editor>` element is not a
+default field provided by the browser, focussing on its corresponding `<label>`
+element won't focus the `<trix-editor>`. To resolve that shortcoming, the
+`#fill_in_rich_text_area` uses the `<trix-editor aria-label="...">` attribute as
+the label text.
+
+This is a helpful, but incomplete solution to the problem. This requires that
+instead of declaring a `<label for="my_rich_text_field">` element
+referencing the `<trix-editor id="my_rich_text_field">` element, the `<label>`
+element's text (or rather, the text that _would be_ in the `<label>` element)
+must be passed to the `<trix-editor aria-label="...">` attribute.
+
+For example:
+
+```html+erb
+<%= form_with(model: Post.new) do |form %>
+  <%= form.label :my_rich_text_field %>
+  <%= form.rich_text_area :my_rich_text_field, "aria-label": translate(:my_rich_text_field, scope: "helpers.label.post") %>
+<% end %>
+```
+
+[actiontext]: https://edgeguides.rubyonrails.org/action_text_overview.html#examples
+[fill_in_rich_text_area]: https://github.com/rails/rails/blob/339be65d669c83fd4c64541a9e82086dc5e64682/actiontext/lib/action_text/system_test_helper.rb
+
 ### The `label` and `submit` test helpers
 
 While `with_form` can simplify `<form>` element interactions with multiple
