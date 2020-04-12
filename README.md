@@ -378,6 +378,10 @@ I've used the [`formulaic` gem][formulaic] before. How is this gem different?
 [form_with]: https://guides.rubyonrails.org/form_helpers.html#dealing-with-basic-forms
 [rails-i18n]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-label
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
