@@ -16,10 +16,11 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "rails", "~> 6.0.2", ">= 6.0.2.1"
+  spec.add_dependency "railties", ">= 5.2.0"
   spec.add_dependency "capybara", ">= 2.15"
 
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "activerecord", ">= 5.2.0"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "webdrivers"
 end
