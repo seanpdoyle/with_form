@@ -1,0 +1,5 @@
+<%= form_with(scope: :widget, url: widgets_path) do |form| %>
+  <%= form.label(:rich_text_area_field) do |builder| %>
+    <%= form.rich_text_area(:rich_text_area_field, "aria-label": builder.translation) %>
+  <% end %>
+<% end %>

@@ -23,3 +23,4 @@ else
 end
 
 gem "rails", rails_constraint
+gem "webpacker"

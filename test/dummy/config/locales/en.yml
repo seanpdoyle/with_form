@@ -41,6 +41,7 @@ en:
         checked_single_checkbox_field: "Checked Single Checkbox Field"
         file_field: "File Field"
         multiple_select_field: "Multiple Select Field"
+        rich_text_area_field: "Rich Text Area Field"
         select_field: "Select Field"
         text_field: "Widget Text Field"
         text_area_field: "Widget Text Area Field"
