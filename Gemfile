@@ -22,5 +22,6 @@ else
   rails_constraint = "~> #{rails_version}.0"
 end
 
+gem "sassc-rails"
 gem "rails", rails_constraint
 gem "webpacker"

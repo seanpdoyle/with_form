@@ -24,15 +24,27 @@ jobs:
       with:
         ruby-version: "${{ matrix.ruby }}"
 
+    - name: "Install NodeJS 12.x"
+      uses: "actions/setup-node@v1"
+      with:
+        node-version: "12.x"
+
     - name: "Generate lockfile"
       run: |
         bundle config path vendor/bundle
         bundle lock
 
-    - uses: "actions/cache@v1"
+    - name: "Cache installed Ruby dependencies"
+      uses: "actions/cache@v1"
       with:
         path: "vendor/bundle"
         key: bundle-${{ hashFiles('Gemfile.lock') }}
+
+    - name: "Cache installed Yarn dependencies"
+      uses: "actions/cache@v1"
+      with:
+        path: "node_modules"
+        key: yarn-${{ hashFiles('yarn.lock') }}
 
     - name: "Install Dependencies"
       run: |
@@ -40,6 +52,7 @@ jobs:
         sudo apt-get -yqq install libsqlite3-dev chromium-browser
 
         bundle install --jobs 4 --retry 3
+        bin/rails app:yarn:install
 
         bin/rails app:webdrivers:chromedriver:update
 
@@ -53,4 +66,5 @@ jobs:
 
     - name: "Run System Tests"
       run: |
+        bin/rails app:webpacker:compile
         bin/rails app:test:system
