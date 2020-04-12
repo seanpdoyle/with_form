@@ -1,6 +1,9 @@
+require "with_form/translation_helpers"
+
 module WithForm
   class ScopeForm
     include ActionView::Helpers::TranslationHelper
+    include WithForm::TranslationHelpers
 
     delegate :choose, to: :@page
 
@@ -52,11 +55,11 @@ module WithForm
     end
 
     def submit(action = nil)
-      translate(action || :submit, scope: [:helpers, :submit, @scope])
+      super(@scope, action || :submit)
     end
 
     def label(attribute)
-      translate(attribute, scope: [:helpers, :label, @scope])
+      super(@scope, attribute)
     end
   end
 end
