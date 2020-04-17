@@ -32,9 +32,8 @@ module WithForm
     end
 
     def choose(attribute, **options)
-      case attribute
-      when Symbol
-        value = @model.public_send(attribute)
+      if attribute.kind_of? Symbol
+        value = read_attribute(attribute)
       else
         value = attribute
       end
@@ -43,45 +42,28 @@ module WithForm
     end
 
     def check(attribute, **options)
-      case attribute
-      when Symbol
-        attribute_value = @model.public_send(attribute)
-
-        case attribute_value
-        when TrueClass, FalseClass, NilClass
-          values = Array(attribute)
-        else
-          values = Array(attribute_value)
-        end
+      if attribute.kind_of? Symbol
+        value = read_attribute(attribute)
       else
-        values = Array(attribute)
+        value = attribute
       end
 
-      values.each { |value| scope_form.check(value, **options) }
+      Array(value).each { |value| scope_form.check(value, **options) }
     end
 
     def uncheck(attribute, **options)
-      case attribute
-      when Symbol
-        attribute_value = @model.public_send(attribute)
-
-        case attribute_value
-        when TrueClass, FalseClass, NilClass
-          values = Array(attribute)
-        else
-          values = Array(attribute_value)
-        end
+      if attribute.kind_of? Symbol
+        value = read_attribute(attribute)
       else
-        values = Array(attribute)
+        value = attribute
       end
 
-      values.each { |value| scope_form.uncheck(value, **options) }
+      Array(value).each { |value| scope_form.uncheck(value, **options) }
     end
 
     def select(attribute, from: nil, **options)
-      case attribute
-      when Symbol
-        value = @model.public_send(attribute)
+      if attribute.kind_of? Symbol
+        value = read_attribute(attribute)
       else
         value = attribute
       end
@@ -90,9 +72,8 @@ module WithForm
     end
 
     def unselect(attribute, from: nil, **options)
-      case attribute
-      when Symbol
-        value = @model.public_send(attribute)
+      if attribute.kind_of? Symbol
+        value = read_attribute(attribute)
       else
         value = attribute
       end
@@ -115,6 +96,16 @@ module WithForm
 
     def scope_form
       WithForm::ScopeForm.new(scope: @model.model_name.i18n_key, page: @page)
+    end
+
+    def read_attribute(attribute)
+      attribute_value = @model.public_send(attribute)
+
+      if attribute_value.in?([true, false, nil])
+        attribute
+      else
+        attribute_value
+      end
     end
   end
 end
