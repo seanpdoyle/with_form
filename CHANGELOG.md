@@ -8,6 +8,8 @@ version links.
 
 ## master
 
+## [0.2.1] - April 17, 2020
+
 Improve test coverage and README.md explanations of the `check` and `uncheck`
 form-filling helper methods.
 
