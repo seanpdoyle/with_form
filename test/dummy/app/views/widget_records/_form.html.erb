@@ -1,0 +1,15 @@
+<%= form.label(:text_field) %>
+<%= form.text_field(:text_field) %>
+
+<%= form.label(:boolean_check_box_field) %>
+<%= form.check_box(:boolean_check_box_field) %>
+
+<%= form.collection_check_boxes(
+  :tag_ids,
+  Tag.all,
+  :id,
+  :name,
+) %>
+
+<%= form.submit %>
+<%= form.submit translate("helpers.submit.widget_record.submit")%>

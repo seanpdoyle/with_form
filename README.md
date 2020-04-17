@@ -228,7 +228,10 @@ For example, consider the following `features/new` template:
     ],
     :last,
     :first,
-  ) %>
+  ) do |language_builder| %>
+    <%= language_builder.label %>
+    <%= language_builder.check_box(checked: language_builder.value == "JavaScript") %>
+  <% end %>
 <% end %>
 ```
 
@@ -277,6 +280,27 @@ with `String` values, or a singular [`Symbol` argument][ruby-symbol].
 
 For example, consider the following hypothetical models:
 
+```ruby
+class Feature < ApplicationRecord
+  attribute :supported, :boolean
+
+  has_many :languages
+end
+
+class FeaturedLanguages < ApplicationRecord
+  belongs_to :feature
+  belongs_to :language
+end
+
+class Language < ApplicationRecord
+  attribute :id, :string
+  attribute :name, :boolean
+
+  has_many :featured_languages
+  has_many :features, through: :featured_languages
+end
+```
+
 Next, consider rendering a `<form>` element within the `features/new` template:
 
 ```html+erb
@@ -286,9 +310,9 @@ Next, consider rendering a `<form>` element within the `features/new` template:
   <%= form.label(:supported) %>
   <%= form.check_box(:supported) %>
 
-  <%= form.label(:language_ids) %>
+  <%= form.label(:languages) %>
   <%= form.collection_check_boxes(
-    :language_ids,
+    :languages,
     Language.all,
     :id,
     :name,
@@ -331,7 +355,7 @@ feature = Feature.new(languages: Language.all, supported: true)
 with_form model: feature do |form| %>
   form.uncheck :supported
 
-  form.uncheck feature.languages.map(&:name)
+  form.uncheck :languages
 
   form.check ["Ruby", "JavaScript"]
 

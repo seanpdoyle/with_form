@@ -44,7 +44,7 @@ class UncheckTest < ApplicationSystemTestCase
   end
 end
 
-class ModelUncheckTest < ApplicationSystemTestCase
+class RecordUncheckTest < ApplicationSystemTestCase
   test "uncheck with nil value and Symbol argument" do
     widget_record = WidgetRecord.new(boolean_check_box_field: nil)
     visit new_widget_record_path
@@ -76,5 +76,53 @@ class ModelUncheckTest < ApplicationSystemTestCase
     end
 
     assert_unchecked_field translate("helpers.label.widget_record.boolean_check_box_field")
+  end
+
+  test "uncheck with association value" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.create!(tags: [tag])
+    visit edit_widget_record_path(widget_record)
+
+    with_form(model: widget_record) do |form|
+      form.check tag.name
+    end
+
+    assert_unchecked_field tag.name
+  end
+
+  test "uncheck with association value Array" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.create!(tags: [tag])
+    visit edit_widget_record_path(widget_record)
+
+    with_form(model: widget_record) do |form|
+      form.check [tag.name]
+    end
+
+    assert_unchecked_field tag.name
+  end
+
+  test "uncheck with association attribute name" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.create!(tags: [tag])
+    visit edit_widget_record_path(widget_record)
+
+    with_form(model: widget_record) do |form|
+      form.uncheck :tags
+    end
+
+    assert_unchecked_field tag.name
+  end
+
+  test "uncheck with association attribute ids" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.create!(tags: [tag])
+    visit edit_widget_record_path(widget_record)
+
+    with_form(model: widget_record) do |form|
+      form.uncheck :tag_ids
+    end
+
+    assert_unchecked_field tag.name
   end
 end

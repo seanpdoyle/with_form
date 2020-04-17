@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_133424) do
+ActiveRecord::Schema.define(version: 2020_04_17_153845) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -43,10 +43,24 @@ ActiveRecord::Schema.define(version: 2020_04_17_133424) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.integer "tag_id", null: false
+    t.integer "widget_record_id", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["widget_record_id"], name: "index_taggings_on_widget_record_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "widget_records", force: :cascade do |t|
     t.text "text_field"
     t.boolean "boolean_check_box_field"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "widget_records"
 end

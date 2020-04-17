@@ -28,6 +28,9 @@ class WidgetRecordsController < ApplicationController
   private
 
   def widget_record_params
-    params.require(:widget_record).permit!
+    params.require(:widget_record).permit(
+      :text_field,
+      tag_ids: [],
+    )
   end
 end

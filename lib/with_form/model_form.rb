@@ -43,7 +43,29 @@ module WithForm
 
     def check(attribute, **options)
       if attribute.kind_of? Symbol
-        value = read_attribute(attribute)
+        attribute_value = @model.public_send(attribute)
+
+        case attribute_value
+        when TrueClass, FalseClass, NilClass
+          values = Array(attribute)
+        when Enumerable
+          if attribute.to_s.ends_with? "_ids"
+            *model_name_fragments, suffix = attribute.to_s.split("_")
+            namespace = "#{@model.name.singular}_#{attribute}"
+
+            values = attribute_value.map { |id| "#{namespace}_#{id}" }
+          else
+            namespace = "#{@model.model_name.singular}_#{attribute}"
+
+            if attribute_value.all? { |value| value.respond_to?(:id) }
+              values = attribute_value.map { |model| "#{namespace}_#{model.id}" }
+            else
+              values = Array(attribute_value)
+            end
+          end
+        else
+          values = Array(attribute_value)
+        end
       else
         value = attribute
       end
@@ -53,7 +75,22 @@ module WithForm
 
     def uncheck(attribute, **options)
       if attribute.kind_of? Symbol
-        value = read_attribute(attribute)
+        attribute_value = @model.public_send(attribute)
+
+        case attribute_value
+        when TrueClass, FalseClass, NilClass
+          values = Array(attribute)
+        when Enumerable
+          namespace = "#{@model.model_name.singular}_#{attribute}"
+
+          if attribute_value.all? { |value| value.respond_to?(:id) }
+            values = attribute_value.map { |model| "#{namespace}_#{model.id}" }
+          else
+            values = Array(attribute_value)
+          end
+        else
+          values = Array(attribute_value)
+        end
       else
         value = attribute
       end

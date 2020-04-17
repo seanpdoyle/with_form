@@ -78,4 +78,54 @@ class RecordCheckTest < ApplicationSystemTestCase
 
     assert_checked_field translate("helpers.label.widget_record.boolean_check_box_field")
   end
+
+  test "check with association value" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.new
+    visit new_widget_record_path
+
+    with_form(model: widget_record) do |form|
+      form.check tag.name
+    end
+
+    assert_checked_field tag.name
+  end
+
+  test "check with association value Array" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.new
+    visit new_widget_record_path
+
+    with_form(model: widget_record) do |form|
+      form.check [tag.name]
+    end
+
+    assert_checked_field tag.name
+  end
+
+  test "check with association attribute name" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.create!
+    visit edit_widget_record_path(widget_record)
+
+    widget_record.tags = [tag]
+    with_form(model: widget_record) do |form|
+      form.check :tags
+    end
+
+    assert_checked_field tag.name
+  end
+
+  test "check with association attribute ids" do
+    tag = Tag.create!(name: "Ruby")
+    widget_record = WidgetRecord.create!
+    visit edit_widget_record_path(widget_record)
+
+    widget_record.tags = [tag]
+    with_form(model: widget_record) do |form|
+      form.check :tag_ids
+    end
+
+    assert_checked_field tag.name
+  end
 end
