@@ -8,6 +8,9 @@ version links.
 
 ## master
 
+Improve test coverage and README.md explanations of the `check` and `uncheck`
+form-filling helper methods.
+
 ## [0.2.0] - April 12, 2020
 
 While `with_form` can simplify `<form>` element interactions with multiple

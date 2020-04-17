@@ -44,3 +44,38 @@ class CheckTest < ApplicationSystemTestCase
     assert_checked_field "Ruby"
   end
 end
+
+class RecordCheckTest < ApplicationSystemTestCase
+  test "check with nil value and Symbol argument" do
+    widget_record = WidgetRecord.new(boolean_check_box_field: nil)
+    visit new_widget_record_path
+
+    with_form(model: widget_record) do |form|
+      form.check :boolean_check_box_field
+    end
+
+    assert_checked_field translate("helpers.label.widget_record.boolean_check_box_field")
+  end
+
+  test "check with true value and Symbol argument" do
+    widget_record = WidgetRecord.new(boolean_check_box_field: true)
+    visit new_widget_record_path
+
+    with_form(model: widget_record) do |form|
+      form.check :boolean_check_box_field
+    end
+
+    assert_checked_field translate("helpers.label.widget_record.boolean_check_box_field")
+  end
+
+  test "check with false value and Symbol argument" do
+    widget_record = WidgetRecord.new(boolean_check_box_field: false)
+    visit new_widget_record_path
+
+    with_form(model: widget_record) do |form|
+      form.check :boolean_check_box_field
+    end
+
+    assert_checked_field translate("helpers.label.widget_record.boolean_check_box_field")
+  end
+end

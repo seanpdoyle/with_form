@@ -34,6 +34,7 @@ en:
   helpers:
     label:
       widget_record:
+        boolean_check_box_field: "Record Boolean Check Box Field"
         text_field: "Record Text Field"
       widget:
         checkbox_field: "Checkbox Field"

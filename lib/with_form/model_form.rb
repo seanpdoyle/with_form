@@ -45,7 +45,14 @@ module WithForm
     def check(attribute, **options)
       case attribute
       when Symbol
-        values = Array(@model.public_send(attribute))
+        attribute_value = @model.public_send(attribute)
+
+        case attribute_value
+        when TrueClass, FalseClass, NilClass
+          values = Array(attribute)
+        else
+          values = Array(attribute_value)
+        end
       else
         values = Array(attribute)
       end
@@ -56,7 +63,14 @@ module WithForm
     def uncheck(attribute, **options)
       case attribute
       when Symbol
-        values = Array(@model.public_send(attribute))
+        attribute_value = @model.public_send(attribute)
+
+        case attribute_value
+        when TrueClass, FalseClass, NilClass
+          values = Array(attribute)
+        else
+          values = Array(attribute_value)
+        end
       else
         values = Array(attribute)
       end

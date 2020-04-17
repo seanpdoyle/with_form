@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_12_144214) do
+ActiveRecord::Schema.define(version: 2020_04_17_133424) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_04_12_144214) do
 
   create_table "widget_records", force: :cascade do |t|
     t.text "text_field"
+    t.boolean "boolean_check_box_field"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

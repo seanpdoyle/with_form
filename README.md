@@ -199,6 +199,165 @@ Those include:
 
 [actions]: https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Actions
 
+### `check` and `uncheck` support
+
+The `check` and `uncheck` helpers can support a mixture of argument types and
+use cases.
+
+#### `with_form(scope:)`
+
+When a call to `with_form` is passed the `scope:` option, the `check` and
+`uncheck` helpers can accept both a `String` argument, or an `Array` argument
+populated with `String` values.
+
+For example, consider the following `features/new` template:
+
+```html+erb
+<%# app/views/features/new.html.erb %>
+
+<%= form_with(scope: :features) do |form| %>
+  <%= form.label(:supported) %>
+  <%= form.check_box(:supported) %>
+
+  <%= form.label(:languages) %>
+  <%= form.collection_check_boxes(
+    :languages,
+    [
+      [ "Ruby", "ruby" ],
+      [ "JavaScript", "js" ],
+    ],
+    :last,
+    :first,
+  ) %>
+<% end %>
+```
+
+There are two styles of [`<input type="checkbox">` elements][mdn-checkbox]
+at-play in this template:
+
+* a singular `<input type="checkbox">` element that corresponds to a
+  `Boolean`-backed `supported` attribute, constructed by
+  [`ActionView::Helpers::FormBuilder#check_box`][check_box]
+
+* a collection of `<input type="checkbox">` elements that correspond to an
+  association of related `language` models, constructed by
+  [`ActionView::Helpers::FormBuilder#collection_check_boxes`][collection_check_boxes]
+
+The corresponding `check` and `uncheck` method exposed by
+`WithForm::TestHelpers` can interact with both.
+
+To check or checked the `Boolean`-backed `<input type="checkbox">` elements,
+pass the attribute's name as a [`Symbol`][ruby-symbol]:
+
+```ruby
+with_form scope: :features do |form| %>
+  form.check :supported
+
+  form.uncheck :supported
+end
+```
+
+To check or checked the `Array`-backed `<input type="checkbox">` elements,
+pass the values as either an `Array` of `String` values, or a singular `String`
+value:
+
+```ruby
+with_form scope: :features do |form| %>
+  form.check ["Ruby", "JavaScript"]
+
+  form.uncheck "JavaScript"
+end
+```
+
+#### `with_form(model:)`
+
+When a call to `with_form` is passed the `model:` option, the `check` and
+`uncheck` helpers can accept a `String` argument, an `Array` argument populated
+with `String` values, or a singular [`Symbol` argument][ruby-symbol].
+
+For example, consider the following hypothetical models:
+
+Next, consider rendering a `<form>` element within the `features/new` template:
+
+```html+erb
+<%# app/views/features/new.html.erb %>
+
+<%= form_with(model: Feature.new) do |form| %>
+  <%= form.label(:supported) %>
+  <%= form.check_box(:supported) %>
+
+  <%= form.label(:language_ids) %>
+  <%= form.collection_check_boxes(
+    :language_ids,
+    Language.all,
+    :id,
+    :name,
+  ) %>
+<% end %>
+```
+
+There are two styles of [`<input type="checkbox">` elements][mdn-checkbox]
+at-play in this template:
+
+* a singular `<input type="checkbox">` element that corresponds to a
+  `Boolean`-backed `supported` attribute, constructed by
+  [`ActionView::Helpers::FormBuilder#check_box`][check_box]
+
+* a collection of `<input type="checkbox">` elements that correspond to an
+  association of related `Language` models, constructed by
+  [`ActionView::Helpers::FormBuilder#collection_check_boxes`][collection_check_boxes]
+
+The corresponding `check` and `uncheck` method exposed by
+`WithForm::TestHelpers` can interact with both.
+
+To check or checked the `Boolean`-backed `<input type="checkbox">` elements,
+pass the attribute's name as a [`Symbol`][ruby-symbol]:
+
+```ruby
+with_form model: Feature.new(supported: false) do |form| %>
+  form.check :supported
+
+  form.uncheck :supported
+end
+```
+
+To check or checked the `Array`-backed `<input type="checkbox">` elements,
+pass the values as either an `Array` of `String` values, or a singular `String`
+value:
+
+```ruby
+feature = Feature.new(languages: Language.all, supported: true)
+
+with_form model: feature do |form| %>
+  form.uncheck :supported
+
+  form.uncheck feature.languages.map(&:name)
+
+  form.check ["Ruby", "JavaScript"]
+
+  form.uncheck "JavaScript"
+end
+```
+
+When interacting with the `Boolean`-backed variation of the `<input
+type="checkbox">` element through the `form.check` or `form.uncheck` calls, the
+end-state of the `<input>` element will **always** correspond to the variation
+of `check` or `uncheck`.
+
+More directly stated: calls to `check` **will always** result in `<input
+type="checkbox" checked>`, and calls to `uncheck` **will always** result in
+`<input type="checkbox">`, regardless of the value of `Feature#supported`.
+
+If your intention is that the `<input>` have the [`checked`
+attribute][mdn-checked], call `check`. If your intention is that the `<input>`
+_not_ have the [`checked` attribute][mdn-checked], call `uncheck`.
+
+[mdn-checkbox]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input/checkbox
+[check_box]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box
+[collection_check_boxes]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes
+[ruby-symbol]: https://ruby-doc.org/core-2.7.1/Symbol.html
+[mdn-checked]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input/checkbox#checked
+
 #### ActionText `rich_text_area` support
 
 When [`ActionText`][actiontext] is available, `with_form` provides a
