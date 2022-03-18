@@ -68,7 +68,7 @@ The `with_form` helper method accepts two styles of options:
   to the `submit` key when one is not specified. For instance:
 
   ```ruby
-  form_with(scope: :post) do |form|
+  with_form(scope: :post) do |form|
     form.click_button
   end
   ```
@@ -80,7 +80,7 @@ The `with_form` helper method accepts two styles of options:
   That action can be overridden:
 
   ```ruby
-  form_with(scope: :post) do |form|
+  with_form(scope: :post) do |form|
     form.click_button :create
   end
   ```
@@ -94,7 +94,7 @@ The `with_form` helper method accepts two styles of options:
   ```ruby
   post = Post.new(title: "The Title")
 
-  form_with(model: post) do |form|
+  with_form(model: post) do |form|
     form.fill_in :title
   end
   ```
@@ -112,7 +112,7 @@ The `with_form` helper method accepts two styles of options:
   ```ruby
   post = Post.create!(title: "Old Title")
 
-  form_with(model: post) do |form|
+  with_form(model: post) do |form|
     form.fill_in :title, with: "New Title"
   end
   ```
@@ -133,7 +133,7 @@ The `with_form` helper method accepts two styles of options:
   ```ruby
   post = Post.new
 
-  form_with(model: post) do |form|
+  with_form(model: post) do |form|
     form.click_button
   end
   ```
@@ -147,7 +147,7 @@ The `with_form` helper method accepts two styles of options:
   ```ruby
   post = Post.new
 
-  form_with(model: post) do |form|
+  with_form(model: post) do |form|
     form.click_button :submit
   end
   ```
@@ -158,7 +158,7 @@ The `with_form` helper method accepts two styles of options:
   ```ruby
   post = Post.last
 
-  form_with(model: post) do |form|
+  with_form(model: post) do |form|
     form.click_button
   end
   ```
@@ -172,7 +172,7 @@ The `with_form` helper method accepts two styles of options:
   ```ruby
   post = Post.last
 
-  form_with(model: post) do |form|
+  with_form(model: post) do |form|
     form.click_button :submit
   end
   ```
